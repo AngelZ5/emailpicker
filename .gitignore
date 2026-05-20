@@ -1,0 +1,107 @@
+# ==============================
+# Dependências
+# ==============================
+node_modules/
+
+# ==============================
+# Build / cache (Vite + React)
+# ==============================
+dist/
+dist-ssr/
+build/
+.vite/
+*.local
+
+# ==============================
+# Variáveis de ambiente (NUNCA subir)
+# ==============================
+.env
+.env.*
+!.env.example
+
+# ==============================
+# Logs
+# ==============================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==============================
+# Firebase (local / debug)
+# ==============================
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+database-debug.log
+pubsub-debug.log
+storage-debug.log
+functions-debug.log
+.runtimeconfig.json
+
+# ==============================
+# Testes e cobertura
+# ==============================
+coverage/
+.nyc_output/
+
+# ==============================
+# ESLint / TypeScript cache
+# ==============================
+.eslintcache
+*.tsbuildinfo
+
+# ==============================
+# Sistema operacional
+# ==============================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ==============================
+# Editores / IDEs
+# ==============================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+*~
+
+# ==============================
+# Cursor / ferramentas locais
+# ==============================
+.cursor/
+
+# ==============================
+# Certificados e chaves privadas
+# ==============================
+*.pem
+*.key
+*.p12
+*.pfx
+serviceAccountKey.json
+firebase-adminsdk*.json
+
+# ==============================
+# Temporários
+# ==============================
+tmp/
+temp/
+*.tmp
+*.temp
