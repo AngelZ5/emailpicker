@@ -7,6 +7,7 @@ import {
   orderBy,
   serverTimestamp,
   setDoc,
+  deleteDoc, // 1. Adicionado o deleteDoc aqui nas importações
 } from 'firebase/firestore'
 import { db, isFirebaseConfigured } from '../firebase/config'
 import { EMAILS_COLLECTION } from '../constants'
@@ -46,4 +47,11 @@ export async function saveEmail(email) {
   })
 
   return { success: true }
+}
+
+// 2. Nova função para a lixeira deletar os e-mails
+export async function deleteEmail(id) {
+  assertFirebase()
+  const ref = doc(db, EMAILS_COLLECTION, id)
+  await deleteDoc(ref)
 }

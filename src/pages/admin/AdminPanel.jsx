@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { subscribeToEmails } from '../../services/emails'
+import { subscribeToEmails, deleteEmail } from '../../services/emails' // 1. Certifique-se de importar a função de deletar
 
 async function copyText(text) {
   await navigator.clipboard.writeText(text)
@@ -28,6 +28,23 @@ export default function AdminPanel() {
     await copyText(email)
     setCopied(email)
     setTimeout(() => setCopied(''), 2000)
+  }
+
+  // 2. Nova função para deletar o e-mail
+  const handleDelete = async (id) => {
+    const confirmar = window.confirm('Tem certeza que deseja remover este e-mail?')
+    if (!confirmar) return
+
+    try {
+      // Se o seu subscribeToEmails for em tempo real (ex: Realtime Database ou Firestore onSnapshot),
+      // a lista vai se atualizar sozinha. Caso contrário, descomente a linha do setEmails abaixo.
+      await deleteEmail(id)
+      
+      // setEmails(prev => prev.filter(item => item.id !== id))
+    } catch (error) {
+      console.error('Erro ao deletar e-mail:', error)
+      alert('Não foi possível remover o e-mail. Tente novamente.')
+    }
   }
 
   const handleLogout = async () => {
@@ -84,13 +101,40 @@ export default function AdminPanel() {
                 <span className="flex-1 truncate font-medium text-slate-800">
                   {item.email}
                 </span>
-                <button
-                  type="button"
-                  onClick={() => handleCopyOne(item.email)}
-                  className="shrink-0 text-sm font-medium text-[#003d6b] hover:underline"
-                >
-                  {copied === item.email ? 'Copiado!' : 'Copiar'}
-                </button>
+                
+                {/* Agrupando os botões de ação à direita */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => handleCopyOne(item.email)}
+                    className="text-sm font-medium text-[#003d6b] hover:underline"
+                  >
+                    {copied === item.email ? 'Copiado!' : 'Copiar'}
+                  </button>
+                  
+                  {/* 3. Botão da Lixeira (Trashcan) */}
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(item.id)}
+                    className="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors"
+                    title="Excluir e-mail"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        path="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
